@@ -29,7 +29,7 @@ DELETE  http://localhost:5216/api/produto/remove
 Content-Type: application/json
 
 {
-    "nome": "Mouse Bluetooth"
+    "Id": "e3efc906-3129-49a4-9989-9cbe405331bc"
 }
 
 ### Remover Produto Cadeira Gamer
@@ -37,16 +37,16 @@ DELETE http://localhost:5216/api/produto/remove
 Content-Type: application/json
 
 {
-    "nome": "Cadeira Gamer"
+    "Id": "e001bc04-073e-480e-8fc1-116ebfe4a220"
 }
 
 
 ### Buscar Produto
-GET http://localhost:5216/api/produto/buscar
+POST http://localhost:5216/api/produto/buscar
 Content-Type: application/json
 
 {
-    "nome": "Cadeira Gamer"
+    "Id": "e001bc04-073e-480e-8fc1-116ebfe4a220"
 }
 
 ### Alterar Produto
