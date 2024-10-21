@@ -16,7 +16,7 @@ dotnet new web --name API
 ```
 ### Adicionar o Projeto à Solução:
 ```
-dotnet new web --name API
+dotnet sln add API
 ```
 
 ### Adicionar suporte ao banco de dados SQLite:
