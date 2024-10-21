@@ -9,6 +9,7 @@ POST http://localhost:5216/api/produto/cadastrar
 Content-Type: application/json
 
 {
+    "id": "1",
     "nome": "Mouse Bluetooth",
     "valor": 50.00,
     "quantidade": 50
@@ -19,6 +20,7 @@ POST http://localhost:5216/api/produto/cadastrar
 Content-Type: application/json
 
 {
+    "id": "2",
     "nome": "Cadeira Gamer",
     "valor": 800.00,
     "quantidade": 15
