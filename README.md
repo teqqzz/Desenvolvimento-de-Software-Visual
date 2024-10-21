@@ -10,30 +10,30 @@ Antes de começar a implementação, os seguintes comandos são usados para conf
 ```
 dotnet new sln --output "Desenvolvimento de Software Visual"
 ```
-####Criar o projeto web:
+### Criar o projeto web:
 ```
 dotnet new web --name API
 ```
-####Adicionar o Projeto à Solução:
+### Adicionar o Projeto à Solução:
 ```
 dotnet new web --name API
 ```
 
-####Adicionar suporte ao banco de dados SQLite:
+### Adicionar suporte ao banco de dados SQLite:
 ```bash
 dotnet add package Microsoft.Data.Sqlite
 ```
-####Restaurar ferramentas e construir o projeto:
+### Restaurar ferramentas e construir o projeto:
 ```
 dotnet tool restore
 dotnet build
 ```
-####Aplicar as migrações e criar o banco de dados:
+### Aplicar as migrações e criar o banco de dados:
 ```
 dotnet ef database update
 ```
 
-####3. Produto.cs (Classe Modelo)
+### 3. Produto.cs (Classe Modelo)
 Este arquivo define a classe Produto que é usada para representar os produtos no sistema.
 
 ```
@@ -56,11 +56,11 @@ namespace API.Models
     }
 }
 ```
-####Explicação de Cada Linha:
+### Explicação:
 Construtor Produto(): Cada vez que um novo produto é criado, ele recebe um ID exclusivo usando Guid.NewGuid() e registra o horário de criação com DateTime.Now.
 Propriedades: As propriedades da classe (Id, Nome, Valor, Quantidade, CriadoEm) representam as características dos produtos. Essas propriedades podem ser acessadas e modificadas durante o ciclo de vida de um produto.
 
-####4. Program.cs (Ponto de Entrada da Aplicação)
+### 4. Program.cs (Ponto de Entrada da Aplicação)
 
 ```
 O arquivo Program.cs contém a configuração da aplicação e define os endpoints da API.
@@ -126,7 +126,7 @@ app.MapPut("/api/produto/alterar", ([FromBody] Produto produto) => {
 
 app.Run(); // Inicia a aplicação.
 ```
-Explicação Geral:
+### Explicação Geral:
 Mapeamento de Endpoints: Cada endpoint usa métodos como MapGet, MapPost, MapDelete e MapPut para definir rotas HTTP específicas (GET, POST, DELETE, PUT).
 Lista de Produtos: A lista produtos funciona como um "banco de dados" temporário em memória para armazenar os produtos durante a execução da API.
 Explicação de Cada Endpoint:
@@ -136,7 +136,7 @@ DELETE /api/produto/remove: Remove um produto da lista baseado no nome.
 GET /api/produto/buscar: Busca um produto específico pelo nome e o retorna.
 PUT /api/produto/alterar: Altera os dados de um produto existente na lista, se encontrado.
 
-####5. teste.http (Arquivo de Testes)
+### 5. teste.http (Arquivo de Testes)
 Este arquivo é usado para testar a API, simulando requisições HTTP para os diversos endpoints.
 ```
 Listar Produtos:
@@ -191,7 +191,7 @@ Content-Type: application/json
     "quantidade": 10
 }
 ```
-6. Como Executar o Projeto
+### 6. Como Executar o Projeto
 Certifique-se de que o .NET esteja instalado.
 Navegue até a pasta raiz do projeto e execute os seguintes comandos:
 ```
