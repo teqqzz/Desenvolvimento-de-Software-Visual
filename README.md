@@ -1,39 +1,32 @@
-# Desenvolvimento de Software Visual
-Revisão Completa do Projeto
-1. Estrutura do Projeto
-O projeto é uma API web construída com o framework ASP.NET Core. O objetivo é manipular uma lista de produtos, permitindo que esses produtos sejam listados, cadastrados, alterados, buscados e removidos por meio de requisições HTTP.
+# Revisão Completa do Projeto
 
-2. Comandos Iniciais para Criar o Projeto
+## 1. Estrutura do Projeto
+O projeto é uma API web construída com o framework **ASP.NET Core**. O objetivo é manipular uma lista de produtos, permitindo que esses produtos sejam listados, cadastrados, alterados, buscados e removidos por meio de requisições HTTP.
+
+## 2. Comandos Iniciais para Criar o Projeto
 Antes de começar a implementação, os seguintes comandos são usados para configurar o ambiente:
 
-Criar a solução:
-
-bash
-Copiar código
-dotnet new sln --output Desenvolvimento de Software Visual
+### Criar a solução:
+```bash
+dotnet new sln --output "Desenvolvimento de Software Visual"
 Criar o projeto web:
-
 bash
 Copiar código
 dotnet new web --name API
 Adicionar o projeto à solução:
-
 bash
 Copiar código
 dotnet sln add API
-Adicionar suporte ao banco de dados SQLite: Como foi usado o SQLite, é necessário adicionar o pacote:
-
+Adicionar suporte ao banco de dados SQLite:
 bash
 Copiar código
 dotnet add package Microsoft.Data.Sqlite
 Restaurar ferramentas e construir o projeto:
-
 bash
 Copiar código
 dotnet tool restore
 dotnet build
 Aplicar as migrações e criar o banco de dados:
-
 bash
 Copiar código
 dotnet ef database update
@@ -76,79 +69,62 @@ using Microsoft.AspNetCore.Mvc; // Facilita o uso de controllers e ações para 
 var builder = WebApplication.CreateBuilder(args); // Cria um construtor para o aplicativo.
 var app = builder.Build(); // Constrói a aplicação.
 
-
 // Endpoint: GET /
-// Retorna uma string simples como resposta.
 app.MapGet("/", () => "Api de Produtos");
-
 
 // Lista de produtos inicializada como uma lista vazia.
 List<Produto> produtos = new List<Produto>();
 
 // Endpoint: GET /api/produto/listar
-// Retorna todos os produtos cadastrados.
 app.MapGet("/api/produto/listar", () => {
-    if (produtos.Count > 0) // Se a lista de produtos tiver elementos...
+    if (produtos.Count > 0) 
     {
-        return Results.Ok(produtos); // Retorna a lista de produtos com status 200 (OK).
+        return Results.Ok(produtos); 
     }
-    return Results.NotFound(); // Se a lista estiver vazia, retorna status 404 (Não Encontrado).
+    return Results.NotFound(); 
 });
 
 // Endpoint: POST /api/produto/cadastrar
-// Recebe um produto do corpo da requisição e o adiciona à lista.
 app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto) => {
-    produtos.Add(produto); // Adiciona o novo produto à lista.
-    return Results.Created("", produto); // Retorna status 201 (Criado) e o produto adicionado.
+    produtos.Add(produto); 
+    return Results.Created("", produto); 
 });
 
 // Endpoint: DELETE /api/produto/remove
-// Remove um produto da lista, baseado no nome.
 app.MapDelete("/api/produto/remove", ([FromBody] Produto produto) => {
-    var produtoRemove = produtos.FirstOrDefault(p => p.Nome == produto.Nome); // Busca o produto pelo nome.
-    
-    if (produtoRemove != null) // Se o produto for encontrado...
+    var produtoRemove = produtos.FirstOrDefault(p => p.Nome == produto.Nome); 
+    if (produtoRemove != null) 
     {
-        produtos.Remove(produtoRemove); // Remove o produto da lista.
-        return Results.Accepted("", produtoRemove); // Retorna status 202 (Aceito) e o produto removido.
+        produtos.Remove(produtoRemove); 
+        return Results.Accepted("", produtoRemove); 
     }
-
-    return Results.NotFound("Produto não encontrado."); // Se não for encontrado, retorna status 404 (Não Encontrado).
+    return Results.NotFound("Produto não encontrado."); 
 });
 
 // Endpoint: GET /api/produto/buscar
-// Busca um produto pelo nome e o retorna.
 app.MapGet("/api/produto/buscar", ([FromBody] Produto produto) => {
-    var produtoBuscar = produtos.FirstOrDefault(p => p.Nome == produto.Nome); // Busca pelo nome.
-
-    if (produtoBuscar != null) // Se encontrado...
+    var produtoBuscar = produtos.FirstOrDefault(p => p.Nome == produto.Nome); 
+    if (produtoBuscar != null) 
     {
-        return Results.Ok(produtoBuscar); // Retorna o produto.
+        return Results.Ok(produtoBuscar); 
     }
-
-    return Results.NotFound("Produto não encontrado."); // Se não for encontrado, retorna status 404 (Não Encontrado).
+    return Results.NotFound("Produto não encontrado."); 
 });
 
 // Endpoint: PUT /api/produto/alterar
-// Altera um produto existente na lista, baseado no nome.
 app.MapPut("/api/produto/alterar", ([FromBody] Produto produto) => {
-    var produtoAlterar = produtos.FirstOrDefault(p => p.Nome == produto.Nome); // Busca o produto.
-
+    var produtoAlterar = produtos.FirstOrDefault(p => p.Nome == produto.Nome); 
     if (produtoAlterar != null) { 
-        // Atualiza os valores do produto, se fornecidos.
         if (produto.Valor != 0) produtoAlterar.Valor = produto.Valor;
         if (produto.Quantidade != 0) produtoAlterar.Quantidade = produto.Quantidade;
-        return Results.Ok(produtoAlterar); // Retorna o produto alterado.
+        return Results.Ok(produtoAlterar); 
     }
-
-    return Results.NotFound("Produto não encontrado."); // Se não encontrado, retorna status 404 (Não Encontrado).
+    return Results.NotFound("Produto não encontrado."); 
 });
 
 app.Run(); // Inicia a aplicação.
 Explicação Geral:
-Mapeamento de Endpoints:
-Cada endpoint usa métodos como MapGet, MapPost, MapDelete e MapPut para definir rotas HTTP específicas (GET, POST, DELETE, PUT).
-A API aceita dados via corpo da requisição (indicado por [FromBody]).
+Mapeamento de Endpoints: Cada endpoint usa métodos como MapGet, MapPost, MapDelete e MapPut para definir rotas HTTP específicas (GET, POST, DELETE, PUT).
 Lista de Produtos: A lista produtos funciona como um "banco de dados" temporário em memória para armazenar os produtos durante a execução da API.
 Explicação de Cada Endpoint:
 GET /api/produto/listar: Retorna a lista de todos os produtos. Se não houver produtos, retorna um erro 404.
@@ -160,17 +136,79 @@ PUT /api/produto/alterar: Altera os dados de um produto existente na lista, se e
 Este arquivo é usado para testar a API, simulando requisições HTTP para os diversos endpoints.
 
 Exemplos:
-GET /api/produto/listar: Testa a listagem de todos os produtos.
-POST /api/produto/cadastrar: Simula o cadastro de novos produtos.
-DELETE /api/produto/remove: Simula a remoção de produtos pelo nome.
-GET /api/produto/buscar: Testa a busca de um produto pelo nome.
-PUT /api/produto/alterar: Simula a alteração dos dados de um produto existente.
+Listar Produtos:
+http
+Copiar código
+GET /api/produto/listar
+Cadastrar Produto:
+http
+Copiar código
+POST /api/produto/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Mouse Bluetooth",
+    "valor": 50.00,
+    "quantidade": 50
+}
+Cadastrar Outro Produto:
+http
+Copiar código
+POST /api/produto/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Cadeira Gamer",
+    "valor": 800.00,
+    "quantidade": 15
+}
+Remover Produto Mouse Bluetooth:
+http
+Copiar código
+DELETE /api/produto/remove
+Content-Type: application/json
+
+{
+    "nome": "Mouse Bluetooth"
+}
+Remover Produto Cadeira Gamer:
+http
+Copiar código
+DELETE /api/produto/remove
+Content-Type: application/json
+
+{
+    "nome": "Cadeira Gamer"
+}
+Buscar Produto:
+http
+Copiar código
+GET /api/produto/buscar
+Content-Type: application/json
+
+{
+    "nome": "Cadeira Gamer"
+}
+Alterar Produto:
+http
+Copiar código
+PUT /api/produto/alterar
+Content-Type: application/json
+
+{
+    "nome": "Cadeira Gamer",
+    "valor": 850.00,
+    "quantidade": 10
+}
 6. Como Executar o Projeto
 Certifique-se de que o .NET esteja instalado.
+
 Navegue até a pasta raiz do projeto e execute os seguintes comandos:
+
 bash
 Copiar código
 dotnet build
 dotnet run
 Acesse a aplicação em http://localhost:5216 e use ferramentas como o Postman ou o arquivo teste.http para realizar testes na API.
 
+perl
