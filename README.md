@@ -139,9 +139,9 @@ PUT /api/produto/alterar: Altera os dados de um produto existente na lista, se e
 ### 5. teste.http (Arquivo de Testes)
 Este arquivo é usado para testar a API, simulando requisições HTTP para os diversos endpoints.
 ```
-Listar Produtos:
+###Listar Produtos:
 GET /api/produto/listar
-Cadastrar Produto:
+###Cadastrar Produto:
 POST /api/produto/cadastrar
 Content-Type: application/json
 
@@ -150,7 +150,7 @@ Content-Type: application/json
     "valor": 50.00,
     "quantidade": 50
 }
-Cadastrar Outro Produto:
+###Cadastrar Outro Produto:
 POST /api/produto/cadastrar
 Content-Type: application/json
 
@@ -159,28 +159,28 @@ Content-Type: application/json
     "valor": 800.00,
     "quantidade": 15
 }
-Remover Produto Mouse Bluetooth:
+###Remover Produto Mouse Bluetooth:
 DELETE /api/produto/remove
 Content-Type: application/json
 
 {
     "nome": "Mouse Bluetooth"
 }
-Remover Produto Cadeira Gamer:
+###Remover Produto Cadeira Gamer:
 DELETE /api/produto/remove
 Content-Type: application/json
 
 {
     "nome": "Cadeira Gamer"
 }
-Buscar Produto:
+###Buscar Produto:
 GET /api/produto/buscar
 Content-Type: application/json
 
 {
     "nome": "Cadeira Gamer"
 }
-Alterar Produto:
+###Alterar Produto:
 http
 PUT /api/produto/alterar
 Content-Type: application/json
