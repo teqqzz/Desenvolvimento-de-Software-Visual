@@ -56,22 +56,14 @@ Este arquivo define a classe Produto que é usada para representar os produtos n
 ```
 namespace API.Models
 {
-    public class Produto
-    {   
-        // Construtor da classe Produto
-        public Produto(){
-            Id = Guid.NewGuid().ToString(); // Gera um identificador único para cada produto.
-            CriadoEm = DateTime.Now; // Armazena a data e hora de criação do produto.
-        }
 
         // Atributos/Propriedades - Características de cada produto
         public string? Id { get; set; } // Identificador único do produto.
         public string? Nome { get; set; } // Nome do produto.
         public double Valor { get; set; } // Valor/preço do produto.
         public int Quantidade { get; set; } // Quantidade em estoque do produto.
-        public DateTime CriadoEm { get; set; } // Data de criação do produto.
+        public DateTime CriadoEm { get; set; } = DateTime.Now; // Data de criação do produto.
     }
-}
 ```
 ### Explicação:
 Construtor Produto(): Cada vez que um novo produto é criado, ele recebe um ID exclusivo usando Guid.NewGuid() e registra o horário de criação com DateTime.Now.
