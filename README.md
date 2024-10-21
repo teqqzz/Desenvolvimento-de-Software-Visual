@@ -30,12 +30,27 @@ dotnet add package Microsoft.Data.Sqlite
 dotnet tool restore
 dotnet build
 ```
-### Aplicar as migrações e criar o banco de dados:
-```
-dotnet ef database update
-```
 
-### 3. Produto.cs (Classe Modelo)
+### 3.Banco.cs (Contexto do Banco de Dados)
+```
+using Microsoft.EntityFrameworkCore;
+namespace API.Models;
+public class Banco : DbContext
+{
+    public DbSet<Produto> Produtos { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=Ecommerce.db");
+    }
+}
+```
+### Explicação:
+DbContext: A classe Banco herda de DbContext, que é a classe base para trabalhar com bancos de dados usando Entity Framework Core.
+DbSet<Produto>: Representa a tabela de produtos no banco de dados, permitindo operações CRUD (Criar, Ler, Atualizar, Excluir).
+OnConfiguring: Configura o provedor de banco de dados (neste caso, SQLite) e define o arquivo de banco de dados como Ecommerce.db.
+
+### 4. Produto.cs (Classe Modelo)
 Este arquivo define a classe Produto que é usada para representar os produtos no sistema.
 
 ```
@@ -62,7 +77,7 @@ namespace API.Models
 Construtor Produto(): Cada vez que um novo produto é criado, ele recebe um ID exclusivo usando Guid.NewGuid() e registra o horário de criação com DateTime.Now.
 Propriedades: As propriedades da classe (Id, Nome, Valor, Quantidade, CriadoEm) representam as características dos produtos. Essas propriedades podem ser acessadas e modificadas durante o ciclo de vida de um produto.
 
-### 4. Program.cs (Ponto de Entrada da Aplicação)
+### 5. Program.cs (Ponto de Entrada da Aplicação)
 
 ```
 O arquivo Program.cs contém a configuração da aplicação e define os endpoints da API.
@@ -128,7 +143,7 @@ app.MapPut("/api/produto/alterar", ([FromBody] Produto produto) => {
 
 app.Run(); // Inicia a aplicação.
 ```
-### Explicação Geral:
+### Explicação:
 Mapeamento de Endpoints: Cada endpoint usa métodos como MapGet, MapPost, MapDelete e MapPut para definir rotas HTTP específicas (GET, POST, DELETE, PUT).
 Lista de Produtos: A lista produtos funciona como um "banco de dados" temporário em memória para armazenar os produtos durante a execução da API.
 Explicação de Cada Endpoint:
@@ -138,7 +153,7 @@ DELETE /api/produto/remove: Remove um produto da lista baseado no nome.
 GET /api/produto/buscar: Busca um produto específico pelo nome e o retorna.
 PUT /api/produto/alterar: Altera os dados de um produto existente na lista, se encontrado.
 
-### 5. teste.http (Arquivo de Testes)
+### 6. teste.http (Arquivo de Testes)
 Este arquivo é usado para testar a API, simulando requisições HTTP para os diversos endpoints.
 ```
 ###Listar Produtos:
@@ -193,11 +208,14 @@ Content-Type: application/json
     "quantidade": 10
 }
 ```
-### 6. Como Executar o Projeto
+### 7. Como Executar o Projeto
 Certifique-se de que o .NET esteja instalado.
 Navegue até a pasta raiz do projeto e execute os seguintes comandos:
 ```
 dotnet build
+dotnet ef database update
 dotnet run
+```
+
 Acesse a aplicação em http://localhost:5216 e use ferramentas como o Postman ou o arquivo teste.http para realizar testes na API.
 
