@@ -21,6 +21,8 @@ dotnet sln add API
 
 ### Adicionar suporte ao banco de dados SQLite:
 ```bash
+dotnet tool install --global dotnet-ef
+dotnet ef migration add InialCreate
 dotnet add package Microsoft.Data.Sqlite
 ```
 ### Restaurar ferramentas e construir o projeto:
